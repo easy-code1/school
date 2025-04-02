@@ -15,6 +15,7 @@ import com.example.demo.dto.MemoDto;
 import com.example.demo.service.MemoService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -45,5 +46,10 @@ public class MemoController {
 	@GetMapping("/memo/viewContent")
 	public @ResponseBody String viewContent(HttpServletRequest request, Model model) {
 		return service.viewContent(request,model);
+	}
+	
+	@GetMapping("/memo/down")
+	public void down(HttpServletRequest request,HttpServletResponse response)throws Exception {
+		service.down(request,response);
 	}
 }

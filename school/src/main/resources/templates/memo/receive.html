@@ -83,7 +83,9 @@ function hideView(){
 		<tr th:each="mdto:${mlist}">
 			<td th:text="${mdto.seUserid}"></td>
 			<td th:text="${mdto.title}" th:onclick="viewContent([[${mdto.id}]])"></td>
-			<td th:text="${mdto.ofname}"></td>
+			<td>
+				<a th:text="${mdto.ofname}" th:href="@{down(ofname=${mdto.ofname},sfname=${mdto.sfname})}">
+			</td>
 			<td th:text="${mdto.writeday}"></td>
 			<td th:text="읽지않음" th:if="${mdto.state==0}"></td>
 			<td th:text="읽음" th:unless="${mdto.state==0}"></td>

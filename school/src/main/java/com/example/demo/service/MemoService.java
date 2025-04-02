@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.io.File;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,6 +21,7 @@ import com.example.demo.dto.MemoDto;
 import com.example.demo.mapper.MemoMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Service
@@ -78,5 +81,21 @@ public class MemoService {
 		}
 		
 		return mapper.getContent(id);
+	}
+	
+	public void down(HttpServletRequest request,HttpServletResponse response)throws Exception {
+		String ofname=request.getParameter("ofname");
+		String sfname=request.getParameter("sfname");
+		
+		String path=ResourceUtils.getFile("classpath:static/memo").toString();
+		
+		response.setHeader("Content-Type", "application/octet-stream");
+		ofname=URLEncoder.encode(ofname,"utf-8");
+		response.setHeader("Content-Disposition","attachment; filename="+ofname);
+		response.setContentType("application/unknown");
+		
+		Path path2=Paths.get(path+"/"+sfname);
+		Files.copy(path2, response.getOutputStream());
+		
 	}
 }
