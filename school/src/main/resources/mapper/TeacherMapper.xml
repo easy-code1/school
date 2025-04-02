@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.TeacherMapper">
+	
+	<select id="tlist" resultType="com.example.demo.dto.TeacherDto">
+		select * from teacher
+		order by name asc
+	</select>
+	
+	<insert id="twriteOk">
+		insert into teacher(userid,pwd,name,email,phone,ban,level,writeday)
+		values(#{userid},#{pwd},#{name},#{email},#{phone},#{ban},#{level},now())
+	</insert>
+</mapper>

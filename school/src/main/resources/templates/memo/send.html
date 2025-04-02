@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/default">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	section{
+		width:1100px;
+		height:600px;
+		margin:auto;
+		position:relative;
+	}
+	section #memo{
+		visibility:hidden;
+		position:absolute;
+		left:300px;
+		top:200px;
+	}
+	section #viewCon {
+        width:300px;
+        height:200px;
+        border:1px solid green;
+        padding:3px;
+        position:absolute;
+        left:400px;
+        top:100px;
+        background:white;
+        visibility:hidden;
+   	}
+   	section #viewCon #content {
+        width:280px;
+        height:170px;
+        overflow:auto;
+	}
+   	section #viewCon input[type=button] {
+        width:80px;
+        height:28px;
+    }
+   	section table {
+     	border-spacing:0px;
+   	}
+   	section table tr td {
+     	height:35px;
+     	border-bottom:1px solid #dddddd;
+   	}
+   	section table tr:first-child td {
+     	border-top:2px solid #dddddd;
+   	}
+   	section table tr:last-child td {
+     	border-bottom:2px solid #dddddd;
+   	}
+</style>
+<script>
+function memoWrite(){
+	document.getElementById("memo").style.visibility="visible";
+	var chk=new XMLHttpRequest();
+	chk.onload=function(){
+		var mapAll=JSON.parse(chk.responseText);
+		document.getElementById("reUserid").options.length=mapAll.length;
+		var i=0;
+		for(map of mapAll){
+			document.getElementById("reUserid").options[i].value=map.userid;
+			document.getElementById("reUserid").options[i].text=map.name;
+			i++;
+		}
+	}
+	chk.open("get","getUserid");
+	chk.send();
+}
+function viewContent(id){
+	var chk=new XMLHttpRequest();
+	chk.onload=function(){
+		document.getElementById("content").innerHTML=chk.responseText;
+		document.getElementById("viewCon").style.visibility="visible";		
+	}
+	chk.open("get","viewContent?id="+id+"&ck=1");
+	chk.send();
+}
+function hideView(){
+	document.getElementById("content").innerHTML="";
+	document.getElementById("viewCon").style.visibility="hidden";	
+}
+</script>
+</head>
+<body>
+<section layout:fragment="content">
+	<div id="memo">
+		<form method="post" action="memoWriteOk" enctype="multipart/form-data">
+			<div>메모 보내기</div>
+			<div>
+				<select name="reUserid" id="reUserid">
+					
+				</select>
+			</div>
+			<div><input type="text" name="title"></div>
+			<div><textarea name="content"></textarea></div>
+			<div><input type="file" name="file"></div>
+			<div><input type="submit" value="보내기"></div>
+		</form>	
+	</div>
+	<table width="900" align="center">
+		<caption>
+			<h3>보낸 메모</h3>
+			<a href="javascript:memoWrite()" style="float:right;">메모보내기</a>
+		</caption>
+		<tr>
+			<td>받는 사람</td>
+			<td>제 목</td>
+			<td>첨부파일</td>
+			<td>보낸 날짜</td>
+			<td>읽기 여부</td>
+		</tr>
+		<tr th:each="mdto:${mlist}">
+			<td th:text="${mdto.reUserid}"></td>
+			<td th:text="${mdto.title}" th:onclick="viewContent([[${mdto.id}]])"></td>
+			<td th:text="${mdto.ofname}"></td>
+			<td th:text="${mdto.writeday}"></td>
+			<td th:text="읽지않음" th:if="${mdto.state==0}"></td>
+			<td th:text="읽음" th:unless="${mdto.state==0}"></td>
+		</tr>
+	</table>
+	<div id="viewCon">
+		<div id="content"></div>
+		<div align="center"><input type="button" value="닫기" onclick="hideView()"></div>
+	</div>
+</section>
+</body>
+</html>

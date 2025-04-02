@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	header{
+		width:1100px;
+		height:50px;
+		margin:auto;
+	}
+	nav{
+		width:1100px;
+		height:60px;
+		line-height:60px;
+		margin:auto;
+	}
+	nav #main{
+		padding-left:0px;
+	}
+	nav #main .menu{
+		list-style-type:none;
+		display:inline-block;
+		width:110px;
+		height:40px;
+		border:1px solid green;
+		line-height:40px;
+		text-align:center;
+		margin-left:40px;
+		position:relative;
+	}
+	nav #main .menu:last-child{
+		width:200px;
+		padding-left:0px;
+	}
+	nav #main .menu .sub{
+		position:absolute;
+		left:-41px;
+		top:40px;
+		visibility:hidden;
+		z-index:10;
+	}
+	nav #main .menu .sub li{
+		list-style-type:none;
+		width:110px;
+		height:40px;
+		border:1px solid green;
+		border-bottom:none;
+		line-height:40px;
+		background:white;
+	}
+	nav #main .menu .sub li:last-child{
+		border-bottom:1px solid green;
+	}
+	footer{
+		width:1100px;
+		height:100px;
+		margin:auto;
+	}
+</style>
+<script>
+function view(n){
+	document.getElementsByClassName("sub")[n].style.visibility="visible";
+}
+function hide(n){
+	document.getElementsByClassName("sub")[n].style.visibility="hidden";
+}
+</script>
+</head>
+<body>
+	<header></header>
+	<nav>
+		<ul id="main">
+			<li class="menu" onmouseover="view(0)" onmouseout="hide(0)">성적관리
+				<ul class="sub">
+					<li>1반</li>
+					<li>2반</li>
+					<li>3반</li>
+				</ul>
+			</li>
+			<li class="menu" onmouseover="view(1)" onmouseout="hide(1)">학생관리
+				<ul class="sub">
+					<li>1반</li>
+					<li>2반</li>
+					<li>3반</li>
+				</ul>
+			</li>
+			<li class="menu" onmouseover="view(2)" onmouseout="hide(2)">커뮤니티
+				<ul class="sub">
+					<li><a href="../comm/list?cla=1">공지사항</a></li>
+					<li><a href="../comm/list?cla=2">게시판</a></li>
+					<li><a href="../comm/list?cla=3">자료실</a></li>
+				</ul>
+			</li>
+			<li class="menu" th:if="${session.level>=80}"><a href="../teacher/tlist">교직원관리</a></li>
+			<li class="menu" onmouseover="view(3)" onmouseout="hide(3)">메모확인
+				<ul class="sub">
+					<li><a href="../memo/send">보낸 메모</a></li>
+					<li><a href="../memo/receive">받은 메모</a></li>
+				</ul>
+			</li>
+			<li class="menu">
+				<span th:text="${session.name+'님'}"></span>
+				<a href="../main/logout">logout</a>
+			</li>
+		</ul>
+	</nav>
+	<section layout:fragment="content"></section>
+	<footer></footer>
+</body>
+</html>

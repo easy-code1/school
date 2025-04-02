@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/default">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+   table {
+     border-spacing:0px;
+   }
+   table tr td {
+     height:50px;
+     border-bottom:1px solid #dddddd;
+     padding:6px;
+   }
+   table tr:first-child td {
+     border-top:2px solid #dddddd;
+   }
+   table tr:last-child td {
+     border-bottom:2px solid  #dddddd;
+   }
+   input[type=text] {
+     width:500px;
+     height:30px;
+   }
+   input[type=password] {
+     width:180px;
+     height:30px;
+   }
+   input[type=submit] {
+     width:300px;
+     height:36px;
+   }
+   textarea {
+     width:500px;
+     height:200px;
+   }
+</style>
+</head>
+<body>
+<section layout:fragment="content">
+	<form method="post" action="writeOk" enctype="multipart/form-data">
+	<input type="hidden" name="cla" th:value="${cla}">
+	<table width="700" align="center">
+		<caption>
+			<h3 th:if="${cla=='1'}">공지사항 글쓰기</h3>
+			<h3 th:if="${cla=='2'}">게시판 글쓰기</h3>
+			<h3 th:if="${cla=='3'}">자료실 글쓰기</h3>		
+		</caption>
+		<tr>
+			<td>제 목</td>
+			<td><input type="text" name="title"></td>
+		</tr>
+		<tr th:if="${cla=='3'}">
+			<td>파 일</td>
+			<td><input type="file" name="file"></td>
+		</tr>
+		<tr>
+			<td>내 용</td>
+			<td><textarea name="content"></textarea></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+				<input type="submit" value="저장">
+			</td>
+		</tr>
+	</table>
+	</form>
+</section>
+</body>
+</html>

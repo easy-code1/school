@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.CommMapper">
+	
+	<insert id="writeOk">
+		insert into community(title,content,cla,ofname,sfname,userid,writeday)
+		values(#{title},#{content},#{cla},#{ofname},#{sfname},#{userid},now())
+	</insert>
+	
+	<select id="list" resultType="com.example.demo.dto.CommDto">
+		select * from community
+		where cla=#{cla}
+		order by id desc
+		limit #{index},10
+	</select>
+	
+	<update id="readnum">
+		update community
+		set readnum=readnum+1
+		where id=#{id}
+	</update>
+	
+	<select id="content" resultType="com.example.demo.dto.CommDto">
+		select * from community
+		where id=#{id}
+	</select>
+	
+	<delete id="delete">
+		delete from community
+		where id=#{id}
+	</delete>
+	
+	<update id="updateOk">
+		update community
+		set title=#{title},content=#{content},ofname=#{ofname},sfname=#{sfname}
+		where id=#{id}
+	</update>
+</mapper>

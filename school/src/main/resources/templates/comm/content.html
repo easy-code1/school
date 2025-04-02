@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/default">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	section{
+		width:1100px;
+		height:600px;
+		margin:auto;
+	}
+	section table {
+     	border-spacing:0px;
+   	}
+   	section table tr td {
+     	height:50px;
+     	border-bottom:1px solid green;
+   	}
+   	section table tr:first-child td {
+     	border-top:2px solid green;
+   	}
+   	section table tr:last-child td {
+     	border-bottom:2px solid  green;
+   	}
+   	section table .btn {
+     	text-decoration:none;
+     	color:black;
+     	border:1px solid black;
+     	padding:4px 20px;
+     	margin-left:10px;
+   	}
+</style>
+</head>
+<body>
+<section layout:fragment="content">
+	<table width="900" align="center">
+		<caption><h3>내용 보기</h3></caption>
+		<tr>
+			<td width="100">제 목</td>
+			<td th:text="${cdto.title}"></td>
+		</tr>
+		<tr>
+			<td>작성자</td>
+			<td th:text="${cdto.userid}"></td>
+		</tr>
+		<tr>
+			<td>조회수</td>
+			<td th:text="${cdto.readnum}"></td>
+		</tr>
+		<tr>
+			<td>작성일</td>
+			<td th:text="${cdto.writeday}"></td>
+		</tr>
+		<tr th:if="${cdto.cla==3}">
+			<td>파 일</td>
+			<td>
+				<a th:href="@{down(ofname=${cdto.ofname},sfname=${cdto.sfname})}" th:text="${cdto.ofname}">
+			</td>
+		</tr>
+		<tr height="200">
+			<td>내 용</td>
+			<td th:utext="${cdto.content}"></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+				<a class="btn" th:href="@{list(cla=${cdto.cla},page=${page})}">목록</a>
+				<th:block th:if="${session.userid==cdto.userid || session.level>=80}">
+					<a class="btn" th:href="@{update(id=${cdto.id},page=${page})}">수정</a>
+					<a class="btn" th:href="@{delete(id=${cdto.id},page=${page},cla=${cdto.cla})}">삭제</a>
+				</th:block>
+			</td>
+		</tr>
+	</table>
+</section>
+</body>
+</html>

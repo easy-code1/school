@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/default">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	section{
+		width:1100px;
+		height:600px;
+		margin:auto;
+		position:relative;
+	}
+	section #memo{
+		visibility:hidden;
+		position:absolute;
+		left:300px;
+		top:200px;
+	}
+	section #viewCon {
+        width:300px;
+        height:200px;
+        border:1px solid green;
+        padding:3px;
+        position:absolute;
+        left:400px;
+        top:100px;
+        background:white;
+        visibility:hidden;
+   	}
+   	section #viewCon #content {
+        width:280px;
+        height:170px;
+        overflow:auto;
+	}
+   	section #viewCon input[type=button] {
+        width:80px;
+        height:28px;
+    }
+   	section table {
+     	border-spacing:0px;
+   	}
+   	section table tr td {
+     	height:35px;
+     	border-bottom:1px solid #dddddd;
+   	}
+   	section table tr:first-child td {
+     	border-top:2px solid #dddddd;
+   	}
+   	section table tr:last-child td {
+     	border-bottom:2px solid  #dddddd;
+   	}
+</style>
+<script>
+function viewContent(id){
+	var chk=new XMLHttpRequest();
+	chk.onload=function(){
+		document.getElementById("content").innerHTML=chk.responseText;
+		document.getElementById("viewCon").style.visibility="visible";
+	}
+	chk.open("get","viewContent?id="+id+"&ck=2");
+	chk.send();
+}
+function hideView(){
+	document.getElementById("viewCon").style.visibility="hidden";
+	document.getElementById("content").innerHTML="";
+}
+</script>
+</head>
+<body>
+<section layout:fragment="content">
+	<table width="900" align="center">
+		<caption><h3>받은 메모</h3></caption>
+		<tr>
+			<td>보낸 사람</td>
+			<td>제 목</td>
+			<td>첨부파일</td>
+			<td>받은 날짜</td>
+			<td>읽기 여부</td>
+		</tr>
+		<tr th:each="mdto:${mlist}">
+			<td th:text="${mdto.seUserid}"></td>
+			<td th:text="${mdto.title}" th:onclick="viewContent([[${mdto.id}]])"></td>
+			<td th:text="${mdto.ofname}"></td>
+			<td th:text="${mdto.writeday}"></td>
+			<td th:text="읽지않음" th:if="${mdto.state==0}"></td>
+			<td th:text="읽음" th:unless="${mdto.state==0}"></td>
+		</tr>
+	</table>
+	<div id="viewCon">
+		<div id="content"></div>
+		<div align="center"><input type="button" value="닫기" onclick="hideView()"></div>
+	</div>
+</section>
+</body>
+</html>

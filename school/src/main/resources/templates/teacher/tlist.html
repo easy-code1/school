@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/default">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	section{
+		width:1100px;
+		height:600px;
+		margin:auto;
+	}
+</style>
+</head>
+<body>
+<section layout:fragment="content">
+	<table width="800" align="center">
+		<caption><h3>교직원 목록</h3></caption>
+		<tr align="center">
+			<td>아이디</td>
+			<td>이름</td>
+			<td>담당반</td>
+			<td>레벨</td>
+			<td>이메일</td>
+			<td>전화번호</td>
+		</tr>
+		<tr th:each="tdto:${tlist}" align="center">
+			<td th:text="${tdto.userid}"></td>
+			<td th:text="${tdto.name}"></td>
+			<td th:if="${tdto.ban==0}">없음</td>
+			<td th:unless="${tdto.ban==0}" th:text="${tdto.ban}"></td>
+			<td th:text="${tdto.level}"></td>
+			<td th:text="${tdto.email}"></td>
+			<td th:text="${tdto.phone}"></td>
+		</tr>
+		<tr>
+			<td colspan="7" align="center">
+				<a href="twrite">교직원 추가</a>
+			</td>
+		</tr>
+	</table>
+</section>
+</body>
+</html>

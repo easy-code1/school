@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/default">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	section{
+		width:1100px;
+		height:600px;
+		margin:auto;
+	}
+	section table {
+    	border-spacing:0px;
+    }
+   	section table tr td {
+     	height:35px;
+     	border-bottom:1px solid #dddddd;
+   	}
+   	section table tr:first-child td {
+     	border-top:2px solid #dddddd;
+   	}
+   	section table tr:last-child td {
+    	border-bottom:2px solid  #dddddd;
+   	}
+</style>
+</head>
+<body>
+<section layout:fragment="content">
+	<h3 align="center" th:if="${cla=='1'}">공지사항</h3>
+	<h3 align="center" th:if="${cla=='2'}">게시판</h3>
+	<h3 align="center" th:if="${cla=='3'}">자료실</h3>
+	
+	<table width="900" align="center">
+		<tr align="center">
+			<td>제목</td>
+			<td width="100">작성자</td>
+			<td width="100">조회수</td>
+			<td width="100">작성일</td>
+		</tr>
+		<tr th:each="cdto:${clist}" align="center">
+			<td align="left"><a th:href="@{readnum(id=${cdto.id},page=${page})}" th:text="${cdto.title}"></a></td>
+			<td th:text="${cdto.userid}"></td>
+			<td th:text="${cdto.readnum}"></td>
+			<td th:text="${cdto.writeday}"></td>
+		</tr>
+		<tr>
+			<td colspan="3" align="center">
+			
+			</td>
+			<td align="center">
+				<a th:href="@{write(cla=${cla})}" th:if="${cla!='1' || session.level>=80}">글쓰기</a>
+			</td>
+		</tr>
+	</table>
+</section>
+</body>
