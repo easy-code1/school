@@ -14,4 +14,5 @@ public interface CommMapper {
 	public CommDto content(String id);
 	public void delete(String id);
 	public void updateOk(CommDto cdto);
+	public int getChong(String cla);
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.SungjukMapper">
+	
+	<select id="sungjukList" resultType="com.example.demo.dto.SungjukDto">
+		select *,(kor+eng+mat+sci+mus) as tot,(kor+eng+mat+sci+mus)/5 as avg
+		from sungjuk
+		where ban=#{ban}
+		order by bunho asc
+	</select> 
+	
+	<insert id="sungjukAdd">
+		insert into sungjuk(name,ban,bunho) 
+		select name,ban,bunho from student
+		where ban=#{ban}
+		order by bunho asc
+	</insert>
+	
+	<update id="sungjukUp">
+		update sungjuk
+		set kor=#{kor},eng=#{eng},mat=#{mat},sci=#{sci},mus=#{mus}
+		where id=#{id}
+	</update>
+</mapper>

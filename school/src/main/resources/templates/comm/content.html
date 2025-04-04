@@ -1,79 +1,142 @@
 <!DOCTYPE html>
-<html lang="ko"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="/default">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="/default">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>내용 보기</title>
 <style>
-	section{
-		width:1100px;
-		height:600px;
-		margin:auto;
-	}
-	section table {
-     	border-spacing:0px;
-   	}
-   	section table tr td {
-     	height:50px;
-     	border-bottom:1px solid green;
-   	}
-   	section table tr:first-child td {
-     	border-top:2px solid green;
-   	}
-   	section table tr:last-child td {
-     	border-bottom:2px solid  green;
-   	}
-   	section table .btn {
-     	text-decoration:none;
-     	color:black;
-     	border:1px solid black;
-     	padding:4px 20px;
-     	margin-left:10px;
-   	}
+section {
+	width: 1100px;
+	margin: auto;
+	padding: 20px 0;
+}
+
+section table {
+	width: 900px;
+	margin: 0 auto;
+	border-spacing: 0;
+	border-collapse: collapse;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+section table caption {
+	margin-bottom: 20px;
+}
+
+section table caption h3 {
+	font-size: 24px;
+	color: #4caf50;
+	margin-bottom: 15px;
+}
+
+section table tr td {
+	padding: 12px 15px;
+	border-bottom: 1px solid #e8f5e9;
+}
+
+section table tr:first-child td {
+	border-top: 2px solid #4caf50;
+}
+
+section table tr:last-child td {
+	border-bottom: 2px solid #4caf50;
+}
+
+section table tr td:first-child {
+	width: 100px;
+	background-color: #e8f5e9;
+	font-weight: bold;
+	color: #2e7d32;
+	text-align: center;
+}
+
+section table tr:nth-last-child(2) td {
+	min-height: 200px;
+	vertical-align: top;
+}
+
+section table .btn {
+	display: inline-block;
+	text-decoration: none;
+	color: #333;
+	background-color: #f5f5f5;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	padding: 8px 20px;
+	margin: 0 5px;
+	font-weight: bold;
+	transition: all 0.3s;
+}
+
+section table .btn:hover {
+	background-color: #4caf50;
+	color: white;
+	border-color: #4caf50;
+}
+
+section table a[href^="down"] {
+	color: #2e7d32;
+	text-decoration: none;
+	font-weight: bold;
+	transition: color 0.3s;
+}
+
+section table a[href^="down"]:hover {
+	color: #4caf50;
+	text-decoration: underline;
+}
+
+section table tr:last-child td {
+	padding: 20px;
+	text-align: center;
+}
 </style>
 </head>
 <body>
-<section layout:fragment="content">
-	<table width="900" align="center">
-		<caption><h3>내용 보기</h3></caption>
-		<tr>
-			<td width="100">제 목</td>
-			<td th:text="${cdto.title}"></td>
-		</tr>
-		<tr>
-			<td>작성자</td>
-			<td th:text="${cdto.userid}"></td>
-		</tr>
-		<tr>
-			<td>조회수</td>
-			<td th:text="${cdto.readnum}"></td>
-		</tr>
-		<tr>
-			<td>작성일</td>
-			<td th:text="${cdto.writeday}"></td>
-		</tr>
-		<tr th:if="${cdto.cla==3}">
-			<td>파 일</td>
-			<td>
-				<a th:href="@{down(ofname=${cdto.ofname},sfname=${cdto.sfname})}" th:text="${cdto.ofname}">
-			</td>
-		</tr>
-		<tr height="200">
-			<td>내 용</td>
-			<td th:utext="${cdto.content}"></td>
-		</tr>
-		<tr>
-			<td colspan="2" align="center">
-				<a class="btn" th:href="@{list(cla=${cdto.cla},page=${page})}">목록</a>
-				<th:block th:if="${session.userid==cdto.userid || session.level>=80}">
-					<a class="btn" th:href="@{update(id=${cdto.id},page=${page})}">수정</a>
-					<a class="btn" th:href="@{delete(id=${cdto.id},page=${page},cla=${cdto.cla})}">삭제</a>
-				</th:block>
-			</td>
-		</tr>
-	</table>
-</section>
+	<section layout:fragment="content">
+		<table align="center">
+			<caption>
+				<h3>내용 보기</h3>
+			</caption>
+			<tr>
+				<td>제 목</td>
+				<td th:text="${cdto.title}"></td>
+			</tr>
+			<tr>
+				<td>작성자</td>
+				<td th:text="${cdto.userid}"></td>
+			</tr>
+			<tr>
+				<td>조회수</td>
+				<td th:text="${cdto.readnum}"></td>
+			</tr>
+			<tr>
+				<td>작성일</td>
+				<td th:text="${cdto.writeday}"></td>
+			</tr>
+			<tr th:if="${cdto.cla==3}">
+				<td>파 일</td>
+				<td>
+					<a th:href="@{down(ofname=${cdto.ofname},sfname=${cdto.sfname})}" th:text="${cdto.ofname}">
+				</td>
+			</tr>
+			<tr>
+				<td>내 용</td>
+				<td th:utext="${cdto.content}" style="min-height: 200px; vertical-align: top;"></td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<a class="btn" th:href="@{list(cla=${cdto.cla},page=${page})}">목록</a> 
+					<th:block th:if="${session.userid==cdto.userid || session.level>=80}">
+						<a class="btn" th:href="@{update(id=${cdto.id},page=${page})}">수정</a>
+						<a class="btn" th:href="@{delete(id=${cdto.id},page=${page},cla=${cdto.cla})}">삭제</a>
+					</th:block>
+				</td>
+			</tr>
+		</table>
+	</section>
 </body>
 </html>

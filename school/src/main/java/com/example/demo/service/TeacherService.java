@@ -55,4 +55,56 @@ public class TeacherService {
 			return "redirect:/main/main";
 		}
 	}
+	
+	public String tUpdate(int id,Model model,HttpSession session) {
+		if(session.getAttribute("userid")==null) {
+			return "redirect:/main/login";
+		}
+		else if(Integer.parseInt(session.getAttribute("level").toString())<80) {
+			return "redirect:/main/main";
+		}
+		else {
+			model.addAttribute("tdto",mapper.getTeacher(id));
+			return "/teacher/tUpdate";
+		}
+		
+	}
+	
+	public String tUpdateOk(TeacherDto tdto,HttpSession session) {
+		if(session.getAttribute("userid")==null) {
+			return "redirect:/main/login";
+		}
+		else if(Integer.parseInt(session.getAttribute("level").toString())<80) {
+			return "redirect:/main/main";
+		}
+		else {
+			mapper.tUpdateOk(tdto);
+			return "redirect:/teacher/tlist";
+		}
+		
+	}
+	
+	public String tDelete(int id,HttpSession session) {
+		if(session.getAttribute("userid")==null) {
+			return "redirect:/main/login";
+		}
+		else if(Integer.parseInt(session.getAttribute("level").toString())<80) {
+			return "redirect:/main/main";
+		}
+		else {
+			mapper.tDelete(id);
+			return "redirect:/teacher/tlist";
+		}
+	}
+	
+	public String myInfo(HttpSession session,Model model) {
+		if(session.getAttribute("userid")==null) {
+			return "redirect:/main/login";
+		}
+		else {
+			TeacherDto tdto=mapper.getTeacher2(session.getAttribute("userid").toString());
+			model.addAttribute("tdto",tdto);
+			return "/teacher/myInfo";
+		}
+	}
 }

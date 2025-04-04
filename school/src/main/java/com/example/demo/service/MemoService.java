@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import java.io.File;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.util.ResourceUtils;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.MyUtil;
@@ -97,5 +95,10 @@ public class MemoService {
 		Path path2=Paths.get(path+"/"+sfname);
 		Files.copy(path2, response.getOutputStream());
 		
+	}
+	
+	public String cntMemo(HttpSession session) {
+		String userid=session.getAttribute("userid").toString();
+		return mapper.cntMemo(userid);
 	}
 }

@@ -1,113 +1,311 @@
 <!DOCTYPE html>
-<html lang="ko"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<style>
-	header{
-		width:1100px;
-		height:50px;
-		margin:auto;
-	}
-	nav{
-		width:1100px;
-		height:60px;
-		line-height:60px;
-		margin:auto;
-	}
-	nav #main{
-		padding-left:0px;
-	}
-	nav #main .menu{
-		list-style-type:none;
-		display:inline-block;
-		width:110px;
-		height:40px;
-		border:1px solid green;
-		line-height:40px;
-		text-align:center;
-		margin-left:40px;
-		position:relative;
-	}
-	nav #main .menu:last-child{
-		width:200px;
-		padding-left:0px;
-	}
-	nav #main .menu .sub{
-		position:absolute;
-		left:-41px;
-		top:40px;
-		visibility:hidden;
-		z-index:10;
-	}
-	nav #main .menu .sub li{
-		list-style-type:none;
-		width:110px;
-		height:40px;
-		border:1px solid green;
-		border-bottom:none;
-		line-height:40px;
-		background:white;
-	}
-	nav #main .menu .sub li:last-child{
-		border-bottom:1px solid green;
-	}
-	footer{
-		width:1100px;
-		height:100px;
-		margin:auto;
-	}
-</style>
-<script>
-function view(n){
-	document.getElementsByClassName("sub")[n].style.visibility="visible";
-}
-function hide(n){
-	document.getElementsByClassName("sub")[n].style.visibility="hidden";
-}
-</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학교 관리 시스템</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Malgun Gothic', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            width: 100%;
+            background-color: #4caf50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 1100px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        nav {
+            width: 100%;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        #main {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .menu {
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .menu > a, .menu > span {
+            display: block;
+            padding: 15px 20px;
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .menu:hover > a, .menu:hover > span {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .sub {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 180px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s;
+            z-index: 100;
+            border-radius: 0 0 4px 4px;
+            overflow: hidden;
+        }
+        
+        .menu:hover .sub {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .sub li {
+            list-style: none;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .sub li:last-child {
+            border-bottom: none;
+        }
+        
+        .sub li a {
+            display: block;
+            padding: 12px 15px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .sub li a:hover {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            padding-left: 20px;
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-info {
+            margin-right: 15px;
+            font-weight: bold;
+            color: #4caf50;
+        }
+        
+        .logout-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        
+        .logout-btn:hover {
+            background-color: #d32f2f;
+        }
+        
+        section {
+            min-height: 600px;
+            padding: 30px 0;
+        }
+        
+        .content-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 30px;
+        }
+        
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .footer-info p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        
+        .footer-links a {
+            color: #a5d6a7;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        nav #cnt {
+    		width: 24px;
+    		height: 24px;
+    		line-height: 24px;
+    		display: inline-flex;
+    		align-items: center;
+    		justify-content: center;
+    		margin-left: 5px;
+    		text-align: center;
+    		font-size: 12px;
+    		font-weight: bold;
+    		border-radius: 50%;
+    		background-color: #ff5722;  /* Orange color for better visibility */
+    		color: white;
+   			box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    		position: relative;
+    		top: -1px;
+    		transition: transform 0.2s, background-color 0.2s;
+		}
+		.menu:hover #cnt {
+   	 		transform: scale(1.1);
+    		background-color: #e64a19;
+		}
+    </style>
+    <script>
+    	window.onload=function(){
+    		var chk=new XMLHttpRequest();
+    		chk.onload=function(){
+    			document.getElementById("cnt").innerText=chk.responseText;
+    		}
+    		chk.open("get","../memo/cntMemo");
+    		chk.send();
+    	}
+    </script>
 </head>
 <body>
-	<header></header>
-	<nav>
-		<ul id="main">
-			<li class="menu" onmouseover="view(0)" onmouseout="hide(0)">성적관리
-				<ul class="sub">
-					<li>1반</li>
-					<li>2반</li>
-					<li>3반</li>
-				</ul>
-			</li>
-			<li class="menu" onmouseover="view(1)" onmouseout="hide(1)">학생관리
-				<ul class="sub">
-					<li>1반</li>
-					<li>2반</li>
-					<li>3반</li>
-				</ul>
-			</li>
-			<li class="menu" onmouseover="view(2)" onmouseout="hide(2)">커뮤니티
-				<ul class="sub">
-					<li><a href="../comm/list?cla=1">공지사항</a></li>
-					<li><a href="../comm/list?cla=2">게시판</a></li>
-					<li><a href="../comm/list?cla=3">자료실</a></li>
-				</ul>
-			</li>
-			<li class="menu" th:if="${session.level>=80}"><a href="../teacher/tlist">교직원관리</a></li>
-			<li class="menu" onmouseover="view(3)" onmouseout="hide(3)">메모확인
-				<ul class="sub">
-					<li><a href="../memo/send">보낸 메모</a></li>
-					<li><a href="../memo/receive">받은 메모</a></li>
-				</ul>
-			</li>
-			<li class="menu">
-				<span th:text="${session.name+'님'}"></span>
-				<a href="../main/logout">logout</a>
-			</li>
-		</ul>
-	</nav>
-	<section layout:fragment="content"></section>
-	<footer></footer>
+    <header>
+        <div class="container">
+            <div class="logo">학교 관리 시스템</div>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="container">
+            <ul id="main">
+                <li class="menu">
+                    <span>성적관리</span>
+                    <ul class="sub">
+                        <li th:if="${session.ban==1 || session.level==100}">
+                        	<a href="../sungjuk/sungjukList?ban=1">1반</a>
+                        </li>
+                        <li th:if="${session.ban==2 || session.level==100}">
+                        	<a href="../sungjuk/sungjukList?ban=2">2반</a>
+                        </li>
+                        <li th:if="${session.ban==3 || session.level==100}">
+                        	<a href="../sungjuk/sungjukList?ban=3">3반</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu">
+                    <span>학생관리</span>
+                    <ul class="sub">
+                        <li th:if="${session.ban==1 || session.level==100}">
+                        	<a href="../student/studentList?ban=1">1반</a>
+                        </li>
+                        <li th:if="${session.ban==2 || session.level==100}">
+                        	<a href="../student/studentList?ban=2">2반</a>
+                        </li>
+                        <li th:if="${session.ban==3 || session.level==100}">
+                        	<a href="../student/studentList?ban=3">3반</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu">
+                    <span>커뮤니티</span>
+                    <ul class="sub">
+                        <li><a href="../comm/list?cla=1">공지사항</a></li>
+                        <li><a href="../comm/list?cla=2">게시판</a></li>
+                        <li><a href="../comm/list?cla=3">자료실</a></li>
+                    </ul>
+                </li>
+                <li class="menu" th:if="${session.level>=80}">
+                    <a href="../teacher/tlist">교직원관리</a>
+                </li>
+                <li class="menu">
+                    <span>메모확인<span id="cnt"></span></span>
+                    <ul class="sub">
+                        <li><a href="../memo/send">보낸 메모</a></li>
+                        <li><a href="../memo/receive">받은 메모</a></li>
+                    </ul>
+                </li>
+            </ul>
+            
+            <div class="user-menu">
+                <a href="../teacher/myInfo"><span class="user-info" th:text="${session.name+'님'}"></span></a>
+                <a href="../main/logout" class="logout-btn">로그아웃</a>
+            </div>
+        </div>
+    </nav>
+    
+    <section>
+        <div class="container">
+            <div class="content-container" layout:fragment="content">
+                <!-- 페이지별 콘텐츠가 여기에 들어갑니다 -->
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-info">
+                <p>학교 관리 시스템 © 2025</p>
+                <p>문의: admin@school.com</p>
+            </div>
+            <div class="footer-links">
+                <a href="#">이용약관</a>
+                <a href="#">개인정보처리방침</a>
+                <a href="#">도움말</a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

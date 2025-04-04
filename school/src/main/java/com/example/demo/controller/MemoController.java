@@ -52,4 +52,9 @@ public class MemoController {
 	public void down(HttpServletRequest request,HttpServletResponse response)throws Exception {
 		service.down(request,response);
 	}
+	
+	@GetMapping("/memo/cntMemo")
+	public @ResponseBody String cntMemo(HttpSession session) {
+		return service.cntMemo(session);
+	}
 }

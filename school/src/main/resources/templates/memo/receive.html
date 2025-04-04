@@ -1,100 +1,311 @@
 <!DOCTYPE html>
-<html lang="ko"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="/default">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="/default">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>메모 확인</title>
 <style>
-	section{
-		width:1100px;
-		height:600px;
-		margin:auto;
-		position:relative;
-	}
-	section #memo{
-		visibility:hidden;
-		position:absolute;
-		left:300px;
-		top:200px;
-	}
-	section #viewCon {
-        width:300px;
-        height:200px;
-        border:1px solid green;
-        padding:3px;
-        position:absolute;
-        left:400px;
-        top:100px;
-        background:white;
-        visibility:hidden;
-   	}
-   	section #viewCon #content {
-        width:280px;
-        height:170px;
-        overflow:auto;
-	}
-   	section #viewCon input[type=button] {
-        width:80px;
-        height:28px;
-    }
-   	section table {
-     	border-spacing:0px;
-   	}
-   	section table tr td {
-     	height:35px;
-     	border-bottom:1px solid #dddddd;
-   	}
-   	section table tr:first-child td {
-     	border-top:2px solid #dddddd;
-   	}
-   	section table tr:last-child td {
-     	border-bottom:2px solid  #dddddd;
-   	}
+section {
+	width: 1100px;
+	min-height: 600px;
+	margin: auto;
+	padding: 20px 0;
+	position: relative;
+}
+
+section table {
+	width: 900px;
+	margin: 0 auto;
+	border-spacing: 0;
+	border-collapse: collapse;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+section table caption {
+	margin-bottom: 20px;
+}
+
+section table caption h3 {
+	font-size: 24px;
+	color: #4caf50;
+	margin-bottom: 15px;
+}
+
+section table tr td {
+	padding: 12px 15px;
+	height: 35px;
+	border-bottom: 1px solid #e8f5e9;
+}
+
+section table tr:first-child {
+	background-color: #e8f5e9;
+	color: #2e7d32;
+	font-weight: bold;
+	text-align: center;
+}
+
+section table tr:first-child td {
+	border-top: 2px solid #4caf50;
+	border-bottom: 1px solid #4caf50;
+}
+
+section table tr:last-child td {
+	border-bottom: 2px solid #4caf50;
+}
+
+section table tr:hover:not(:first-child) {
+	background-color: #f9f9f9;
+}
+
+section table a {
+	color: #2e7d32;
+	text-decoration: none;
+	transition: color 0.2s;
+}
+
+section table a:hover {
+	color: #4caf50;
+	text-decoration: underline;
+}
+
+section table td[onclick] {
+	cursor: pointer;
+	transition: color 0.2s;
+}
+
+section table td[onclick]:hover {
+	color: #4caf50;
+}
+
+#memo {
+	visibility: hidden;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 320px;
+	border-radius: 8px;
+	border: none;
+	box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+	padding: 20px;
+	background: white;
+	z-index: 100;
+}
+
+#memo div {
+	margin-top: 15px;
+	text-align: center;
+}
+
+#memo div:first-child {
+	font-size: 18px;
+	color: #2e7d32;
+	font-weight: bold;
+	margin-bottom: 15px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #e8f5e9;
+}
+
+#memo input[type=text], #memo textarea, #memo select {
+	width: 100%;
+	padding: 8px 12px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	font-size: 14px;
+	transition: border 0.3s;
+	box-sizing: border-box;
+}
+
+#memo input[type=text]:focus, #memo textarea:focus, #memo select:focus {
+	border: 1px solid #4caf50;
+	outline: none;
+	box-shadow: 0 0 3px rgba(76, 175, 80, 0.3);
+}
+
+#memo input[type=text] {
+	height: 36px;
+}
+
+#memo textarea {
+	height: 100px;
+	resize: vertical;
+	font-family: 'Malgun Gothic', sans-serif;
+}
+
+#memo select {
+	height: 36px;
+}
+
+#memo input[type=file] {
+	width: 100%;
+	padding: 8px 0;
+}
+
+#memo input[type=submit] {
+	width: 100%;
+	height: 40px;
+	background: #4caf50;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+#memo input[type=submit]:hover {
+	background: #3d8b40;
+}
+
+#memo input[type=button] {
+	width: 100%;
+	height: 36px;
+	color: #f44336;
+	background: #f5f5f5;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: all 0.3s;
+	margin-top: 10px;
+}
+
+#memo input[type=button]:hover {
+	background: #e0e0e0;
+}
+
+#viewCon {
+	width: 340px;
+	border-radius: 8px;
+	border: none;
+	box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+	padding: 20px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	background: white;
+	visibility: hidden;
+	z-index: 100;
+}
+
+#viewCon #content {
+	width: 100%;
+	height: 200px;
+	padding: 15px;
+	border: 1px solid #e8f5e9;
+	border-radius: 4px;
+	background: #f9f9f9;
+	overflow: auto;
+	margin-bottom: 15px;
+	font-size: 14px;
+	line-height: 1.6;
+}
+
+#viewCon input[type=button] {
+	width: 100px;
+	height: 36px;
+	background: #f5f5f5;
+	color: #333;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+#viewCon input[type=button]:hover {
+	background: #e0e0e0;
+}
 </style>
 <script>
-function viewContent(id){
-	var chk=new XMLHttpRequest();
-	chk.onload=function(){
-		document.getElementById("content").innerHTML=chk.responseText;
-		document.getElementById("viewCon").style.visibility="visible";
+	function viewContent(id) {
+		var chk = new XMLHttpRequest();
+		chk.onload = function() {
+			document.getElementById("content").innerHTML = chk.responseText;
+			document.getElementById("viewCon").style.visibility = "visible";
+		}
+		chk.open("get", "viewContent?id=" + id + "&ck=2");
+		chk.send();
 	}
-	chk.open("get","viewContent?id="+id+"&ck=2");
-	chk.send();
-}
-function hideView(){
-	document.getElementById("viewCon").style.visibility="hidden";
-	document.getElementById("content").innerHTML="";
-}
+
+	function hideView() {
+		document.getElementById("viewCon").style.visibility = "hidden";
+		document.getElementById("content").innerHTML = "";
+	}
+
+	function memoWrite(reUserid) {
+		document.getElementById("memo").style.visibility = "visible";
+		document.getElementById("reUserid").value = reUserid;
+	}
+
+	function hideMemo() {
+		document.getElementById("memo").style.visibility = "hidden";
+	}
 </script>
 </head>
 <body>
-<section layout:fragment="content">
-	<table width="900" align="center">
-		<caption><h3>받은 메모</h3></caption>
-		<tr>
-			<td>보낸 사람</td>
-			<td>제 목</td>
-			<td>첨부파일</td>
-			<td>받은 날짜</td>
-			<td>읽기 여부</td>
-		</tr>
-		<tr th:each="mdto:${mlist}">
-			<td th:text="${mdto.seUserid}"></td>
-			<td th:text="${mdto.title}" th:onclick="viewContent([[${mdto.id}]])"></td>
-			<td>
-				<a th:text="${mdto.ofname}" th:href="@{down(ofname=${mdto.ofname},sfname=${mdto.sfname})}">
-			</td>
-			<td th:text="${mdto.writeday}"></td>
-			<td th:text="읽지않음" th:if="${mdto.state==0}"></td>
-			<td th:text="읽음" th:unless="${mdto.state==0}"></td>
-		</tr>
-	</table>
-	<div id="viewCon">
-		<div id="content"></div>
-		<div align="center"><input type="button" value="닫기" onclick="hideView()"></div>
-	</div>
-</section>
+	<section layout:fragment="content">
+		<div id="memo">
+			<form method="post" action="memoWriteOk"
+				enctype="multipart/form-data">
+				<div>메모 보내기</div>
+				<div>
+					<input type="text" name="reUserid" id="reUserid" readonly placeholder="받는 사람">
+				</div>
+				<div>
+					<input type="text" name="title" placeholder="제목을 입력하세요">
+				</div>
+				<div>
+					<textarea name="content" placeholder="내용을 입력하세요"></textarea>
+				</div>
+				<div>
+					<input type="file" name="file">
+				</div>
+				<div>
+					<input type="submit" value="보내기">
+				</div>
+				<div>
+					<input type="button" value="취소" onclick="hideMemo()">
+				</div>
+			</form>
+		</div>
+
+		<table align="center">
+			<caption>
+				<h3>받은 메모</h3>
+			</caption>
+			<tr>
+				<td>보낸 사람</td>
+				<td>제 목</td>
+				<td>첨부파일</td>
+				<td>받은 날짜</td>
+				<td>읽기 여부</td>
+			</tr>
+			<tr th:each="mdto:${mlist}" align="center">
+				<td th:text="${mdto.seUserid}" th:onclick="memoWrite([[${mdto.seUserid}]])"></td>
+				<td th:text="${mdto.title}" th:onclick="viewContent([[${mdto.id}]])"></td>
+				<td>
+					<a th:if="${mdto.ofname != null}" th:text="${mdto.ofname}" th:href="@{down(ofname=${mdto.ofname},sfname=${mdto.sfname})}"></a>
+					<span th:unless="${mdto.ofname != null}">-</span>
+				</td>
+				<td th:text="${mdto.writeday}"></td>
+				<td>
+					<span th:if="${mdto.state==0}" style="color: #f44336; font-weight: bold;">읽지않음</span> 
+					<span th:unless="${mdto.state==0}" style="color: #9e9e9e;">읽음</span>
+				</td>
+			</tr>
+		</table>
+
+		<div id="viewCon">
+			<div id="content"></div>
+			<div align="center">
+				<input type="button" value="닫기" onclick="hideView()">
+			</div>
+		</div>
+	</section>
 </body>
 </html>

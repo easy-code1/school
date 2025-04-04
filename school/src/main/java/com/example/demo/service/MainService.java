@@ -37,6 +37,7 @@ public class MainService {
 			session.setAttribute("userid", tdto.getUserid());
 			session.setAttribute("level", tdto.getLevel());
 			session.setAttribute("name", tdto.getName());
+			session.setAttribute("ban", tdto.getBan());
 			return "redirect:/main/main";
 		}
 		else {

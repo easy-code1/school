@@ -58,10 +58,23 @@ public class CommService {
 				page=Integer.parseInt(request.getParameter("page"));
 			}
 			int index=(page-1)*10;
+			int pstart=page/10;
+			if(page%10==0) {
+				pstart--;
+			}
+			pstart=pstart*10+1;
+			int pend=pstart+9;
+			int chong=mapper.getChong(cla);
+			if(pend>chong) {
+				pend=chong;
+			}
 			ArrayList<CommDto> clist=mapper.list(index, cla);
 			model.addAttribute("clist",clist);
 			model.addAttribute("cla",cla);
 			model.addAttribute("page",page);
+			model.addAttribute("pstart",pstart);
+			model.addAttribute("pend",pend);
+			model.addAttribute("chong",chong);
 			return "/comm/list";
 		}
 	}

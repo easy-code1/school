@@ -4,6 +4,7 @@
 	
 	<select id="tlist" resultType="com.example.demo.dto.TeacherDto">
 		select * from teacher
+		where delstate=0
 		order by name asc
 	</select>
 	
@@ -11,4 +12,26 @@
 		insert into teacher(userid,pwd,name,email,phone,ban,level,writeday)
 		values(#{userid},#{pwd},#{name},#{email},#{phone},#{ban},#{level},now())
 	</insert>
+	
+	<select id="getTeacher" resultType="com.example.demo.dto.TeacherDto">
+		select * from teacher
+		where id=#{id}
+	</select>
+	
+	<select id="getTeacher2" resultType="com.example.demo.dto.TeacherDto">
+		select * from teacher
+		where userid=#{userid}
+	</select>
+	
+	<update id="tUpdateOk">
+		update teacher 
+		set userid=#{userid},pwd=#{pwd},name=#{name},email=#{email},phone=#{phone},level=#{level},ban=#{ban}
+		where id=#{id} 
+	</update>
+	
+	<update id="tDelete">
+		update teacher 
+		set delstate=1
+		where id=#{id}
+	</update>
 </mapper>

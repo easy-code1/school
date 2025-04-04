@@ -15,4 +15,5 @@ public interface MemoMapper {
 	public ArrayList<MemoDto> receive(String userid);
 	public String getContent(String id);
 	public void setState(String id);
+	public String cntMemo(String userid);
 }

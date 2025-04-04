@@ -35,4 +35,10 @@
 		set title=#{title},content=#{content},ofname=#{ofname},sfname=#{sfname}
 		where id=#{id}
 	</update>
+	
+	<select id="getChong" resultType="Integer">
+		select ceil(count(*)/10) 
+		from community
+		where cla=#{cla}
+	</select>
 </mapper>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/default">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+   section {
+     width:1100px;
+     height:600px;
+     margin:auto;
+   }
+   section table input[type=text] {
+     width:30px;
+     text-align:right;
+     outline:none;
+     border:1px solid #cccccc;
+     border-radius:3px;
+   }
+</style>
+<script>
+function check(my,index){
+	var jumsu=parseInt(my.value);
+	if(jumsu < 0 || jumsu > 100){
+		my.value="";
+		my.focus();
+		my.style.border="1px solid red";
+	}
+	else{
+		my.style.border="1px solid #cccccc";
+		var pkc=document.getElementsByClassName("pkc"+index);
+		var tot=0;
+		for(i=0;i<5;i++){
+			tot+=parseInt(pkc[i].value);
+		}
+		document.getElementsByClassName("tot")[index].innerText=tot;
+		document.getElementsByClassName("avg")[index].innerText=tot/5;
+	}
+}
+</script>
+</head>
+<body> <!-- sungjukList.html -->
+  <section layout:fragment="content">
+    <th:block th:if="${slist.size()==0}">
+      <h3 align="center"> 학생 자료가 없습니다 </h3>
+      <div align="center"> <a th:href="@{sungjukAdd(ban=${ban})}"> 학생추가하기 </a></div>
+    </th:block>
+    
+    <th:block th:unless="${slist.size()==0}">
+      <table width="900" align="center">
+        <caption> <h3 th:text="${ban+'반 성적정보'}"> </h3></caption>
+        <tr align="center">
+          <td> 번호 </td>
+          <td> 이름 </td>
+          <td> 국어 </td>
+          <td> 영어 </td>
+          <td> 수학 </td>
+          <td> 과학 </td>
+          <td> 음악 </td>
+          <td> 합계 </td>
+          <td> 평균 </td>
+          <td> 저장 </td>
+        </tr>
+        <tr th:each="sdto,sts:${slist}" align="center">
+         <form method="post" action="sungjukUp">
+         <input type="hidden" name="id" th:value="${sdto.id}">
+         <input type="hidden" name="ban" th:value="${sdto.ban}">
+          <td th:text="${sdto.bunho}"></td>
+          <td th:text="${sdto.name}"></td>
+          <td><input type="text" name="kor" th:value="${sdto.kor}" th:class="${'pkc'+sts.index}" th:onblur="check(this,[[${sts.index}]])"></td>
+          <td><input type="text" name="eng" th:value="${sdto.eng}" th:class="${'pkc'+sts.index}" th:onblur="check(this,[[${sts.index}]])"></td>
+          <td><input type="text" name="mat" th:value="${sdto.mat}" th:class="${'pkc'+sts.index}" th:onblur="check(this,[[${sts.index}]])"></td>
+          <td><input type="text" name="sci" th:value="${sdto.sci}" th:class="${'pkc'+sts.index}" th:onblur="check(this,[[${sts.index}]])"></td>
+          <td><input type="text" name="mus" th:value="${sdto.mus}" th:class="${'pkc'+sts.index}" th:onblur="check(this,[[${sts.index}]])"></td>
+          <td th:text="${sdto.tot}" class="tot"></td>
+          <td th:text="${sdto.avg}" class="avg"></td>
+          <td><input type="submit" value="저장"></td>
+         </form>
+        </tr>
+      </table>
+    </th:block>
+    
+  </section>
+</body>
+</html>

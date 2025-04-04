@@ -25,6 +25,7 @@
 			<td>레벨</td>
 			<td>이메일</td>
 			<td>전화번호</td>
+			<td>수정/삭제</td>
 		</tr>
 		<tr th:each="tdto:${tlist}" align="center">
 			<td th:text="${tdto.userid}"></td>
@@ -34,6 +35,10 @@
 			<td th:text="${tdto.level}"></td>
 			<td th:text="${tdto.email}"></td>
 			<td th:text="${tdto.phone}"></td>
+			<td>
+				<input type="button" value="수정" th:onclick="|location='@{tUpdate(id=${tdto.id})}'|">
+				<input type="button" value="삭제" th:onclick="|location='@{tDelete(id=${tdto.id})}'|">
+			</td>
 		</tr>
 		<tr>
 			<td colspan="7" align="center">
