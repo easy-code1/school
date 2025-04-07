@@ -4,100 +4,181 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/default">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<style>
-	section{
-		width:1100px;
-		height:600px;
-		margin:auto;
-	}
-	section table {
-     	border-spacing:0px;
-   	}
-   	section table tr td {
-     	height:50px;
-     	border-bottom:1px solid #dddddd;
-     	padding:6px;
-   	}
-   	section table tr:first-child td {
-     	border-top:2px solid #dddddd;
-   	}
-   	section table tr:last-child td {
-     	border-bottom:2px solid  #dddddd;
-   	}
-   	section input[type=text] {
-     	width:300px;
-     	height:30px;
-   	}
-   	section input[type=submit] {
-     	width:300px;
-     	height:36px;
-   	}
-   	section select {
-     	width:308px;
-     	height:36px;
-   	}
-</style>
+    <meta charset="UTF-8">
+    <title>교직원 수정</title>
+    <style>
+        section {
+            width: 1100px;
+            min-height: 600px;
+            margin: auto;
+            padding: 20px 0;
+            position: relative;
+        }
+        
+        section table {
+            width: 600px;
+            margin: 0 auto;
+            border-spacing: 0;
+            border-collapse: collapse;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        section table caption {
+            margin-bottom: 20px;
+        }
+        
+        section table caption h3 {
+            font-size: 24px;
+            color: #4caf50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        section table tr td {
+            padding: 15px;
+            height: 50px;
+            border-bottom: 1px solid #e8f5e9;
+        }
+        
+        section table tr td:first-child {
+            width: 30%;
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        section table tr td:last-child {
+            width: 70%;
+            padding-left: 20px;
+        }
+        
+        section table tr:first-child td {
+            border-top: 2px solid #4caf50;
+        }
+        
+        section table tr:last-child td {
+            border-bottom: 2px solid #4caf50;
+            text-align: center;
+            background: white;
+            padding: 20px;
+        }
+        
+        section input[type=text] {
+            width: 100%;
+            height: 36px;
+            padding: 0 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+        
+        section input[type=text]:focus {
+            border: 1px solid #4caf50;
+            outline: none;
+            box-shadow: 0 0 3px rgba(76, 175, 80, 0.3);
+        }
+        
+        section select {
+            width: 100%;
+            height: 36px;
+            padding: 0 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+            background-color: white;
+            transition: border 0.3s;
+        }
+        
+        section select:focus {
+            border: 1px solid #4caf50;
+            outline: none;
+            box-shadow: 0 0 3px rgba(76, 175, 80, 0.3);
+        }
+        
+        section input[type=submit] {
+            width: 300px;
+            height: 40px;
+            background: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 15px;
+        }
+        
+        section input[type=submit]:hover {
+            background: #3d8b40;
+        }
+    </style>
 </head>
 <body>
-<section layout:fragment="content">
-<form method="post" action="tUpdateOk">
-<input type="hidden" name="id" th:value="${tdto.id}">
-	<table width="500" align="center">
-		<caption><h3>교직원 수정</h3></caption>
-		<tr>
-			<td>아이디</td>
-			<td><input type="text" name="userid" th:value="${tdto.userid}"></td>
-		</tr>
-		<tr>
-			<td>비밀번호</td>
-			<td><input type="text" name="pwd" th:value="${tdto.pwd}"></td>
-		</tr>
-		<tr>
-			<td>이름</td>
-			<td><input type="text" name="name" th:value="${tdto.name}"></td>
-		</tr>
-		<tr>
-			<td>이메일</td>
-			<td><input type="text" name="email" th:value="${tdto.email}"></td>
-		</tr>
-		<tr>
-			<td>전화</td>
-			<td><input type="text" name="phone" th:value="${tdto.phone}"></td>
-		</tr>
-		<tr>
-			<td>반</td>
-			<td>
-				<select name="ban">
-					<option value="0" th:selected="${tdto.ban==0}">반없음</option>
-					<option value="1" th:selected="${tdto.ban==1}">1</option>
-					<option value="2" th:selected="${tdto.ban==2}">2</option>
-					<option value="3" th:selected="${tdto.ban==3}">3</option>
-					<option value="4" th:selected="${tdto.ban==4}">4</option>
-					<option value="5" th:selected="${tdto.ban==5}">5</option>
-					<option value="6" th:selected="${tdto.ban==6}">6</option>
-					<option value="7" th:selected="${tdto.ban==7}">7</option>
-				</select>
-			</td>
-		</tr>
-		<tr>
-			<td>레벨</td>
-			<td>
-				<select name="level">
-					<option value="10" th:selected="${tdto.level==10}">10</option>
-					<option value="30" th:selected="${tdto.level==30}">30</option>
-					<option value="50" th:selected="${tdto.level==50}">50</option>
-					<option value="80" th:selected="${tdto.level==80}">80</option>
-					<option value="100" th:selected="${tdto.level==100}">100</option>
-				</select>
-			</td>
-		</tr>
-		<tr align="center">
-        	<td colspan="2"> <input type="submit" value="수정"> </td>
-      	</tr>
-	</table>
-</form>
-</section>
+    <section layout:fragment="content">
+        <form method="post" action="tUpdateOk">
+            <input type="hidden" name="id" th:value="${tdto.id}">
+            <table>
+                <caption><h3>교직원 수정</h3></caption>
+                <tr>
+                    <td>아이디</td>
+                    <td><input type="text" name="userid" th:value="${tdto.userid}"></td>
+                </tr>
+                <tr>
+                    <td>비밀번호</td>
+                    <td><input type="text" name="pwd" th:value="${tdto.pwd}"></td>
+                </tr>
+                <tr>
+                    <td>이름</td>
+                    <td><input type="text" name="name" th:value="${tdto.name}"></td>
+                </tr>
+                <tr>
+                    <td>이메일</td>
+                    <td><input type="text" name="email" th:value="${tdto.email}"></td>
+                </tr>
+                <tr>
+                    <td>전화</td>
+                    <td><input type="text" name="phone" th:value="${tdto.phone}"></td>
+                </tr>
+                <tr>
+                    <td>반</td>
+                    <td>
+                        <select name="ban">
+                            <option value="0" th:selected="${tdto.ban==0}">반없음</option>
+                            <option value="1" th:selected="${tdto.ban==1}">1</option>
+                            <option value="2" th:selected="${tdto.ban==2}">2</option>
+                            <option value="3" th:selected="${tdto.ban==3}">3</option>
+                            <option value="4" th:selected="${tdto.ban==4}">4</option>
+                            <option value="5" th:selected="${tdto.ban==5}">5</option>
+                            <option value="6" th:selected="${tdto.ban==6}">6</option>
+                            <option value="7" th:selected="${tdto.ban==7}">7</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>레벨</td>
+                    <td>
+                        <select name="level">
+                            <option value="10" th:selected="${tdto.level==10}">10</option>
+                            <option value="30" th:selected="${tdto.level==30}">30</option>
+                            <option value="50" th:selected="${tdto.level==50}">50</option>
+                            <option value="80" th:selected="${tdto.level==80}">80</option>
+                            <option value="100" th:selected="${tdto.level==100}">100</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" value="수정">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </section>
 </body>
 </html>
